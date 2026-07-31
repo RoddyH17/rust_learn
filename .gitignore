@@ -1,0 +1,11 @@
+# Rust
+target/
+
+# Blog (Next.js)
+blog/node_modules/
+blog/.next/
+blog/out/
+blog/.content-collections/
+
+# macOS
+.DS_Store
