@@ -26,7 +26,7 @@ cd ~/rust_learn && ./new_day.sh 2 ownership
 # ... 写代码 (cd day2/ownership && cargo run)、写 day2/NOTES.md ...
 
 # 2. 建博客草稿(写完删掉 draft: true 行)
-cd ~/blog && ./new_post.sh day-2-ownership rust "Day 2 · 所有权"
+cd ~/blog && ./new_post.sh rust_learn day-2-ownership "Day 2 · 所有权"
 
 # 3. 收工:两边各推一次
 cd ~/rust_learn && ./sync.sh "day 2: ownership"
@@ -37,4 +37,4 @@ cd ~/blog && ./sync.sh "post: day 2 ownership"
 
 | Day | 日期 | 主题 | 博客 |
 |-----|------|------|------|
-| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [Day 1](https://roddyh17.github.io/blog/day-1-hello-rust/) |
+| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [Day 1](https://roddyh17.github.io/blog/rust_learn/day-1-hello-rust/) |
