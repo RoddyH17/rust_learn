@@ -6,6 +6,7 @@ const nextConfig = {
   // Static export for GitHub Pages, served at roddyh17.github.io/rust_learn
   output: "export",
   basePath: "/rust_learn",
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
