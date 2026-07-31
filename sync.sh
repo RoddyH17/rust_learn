@@ -1,6 +1,5 @@
 #!/bin/bash
 # 每日同步:提交全部更改并推送到 GitHub
-# push 到 main 后,GitHub Actions 会自动重建并部署博客
 # 用法: ./sync.sh ["commit message"]
 set -e
 cd "$(dirname "$0")"
@@ -16,5 +15,5 @@ git commit -m "$msg"
 git push origin main
 
 echo ""
-echo "✅ 已推送。博客构建进度: https://github.com/RoddyH17/rust_learn/actions"
-echo "🌐 博客地址: https://roddyh17.github.io/rust_learn/"
+echo "✅ 代码已推送: https://github.com/RoddyH17/rust_learn"
+echo "💡 别忘了写博客: ~/blog/content/ 新建 mdx 后跑 cd ~/blog && ./sync.sh"
