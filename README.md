@@ -1,6 +1,8 @@
 # rust_learn — 每日 Rust 学习
 
-一天一个文件夹:可运行的代码 + 学习笔记。配套博客(反思 + C++ 对比)在 [RoddyH17.github.io](https://github.com/RoddyH17/RoddyH17.github.io)(本地 `~/blog`)。
+一天一个文件夹:可运行的代码 + 学习笔记。把 Rust 当作第一门编程语言,从零学起。配套博客在 [RoddyH17.github.io](https://github.com/RoddyH17/RoddyH17.github.io)(本地 `~/blog`)。
+
+**内容分工**:`NOTES.md` 是技术细节的唯一来源(命令、概念、踩坑),博客只写学习叙事与反思,两边互相链接、不重复内容。
 
 - ✍️ **博客**: https://roddyh17.github.io/
 - 📁 **本仓库**: `dayN/` — 每天的可运行 crate + `NOTES.md`
@@ -26,7 +28,7 @@ cd ~/rust_learn && ./new_day.sh 2 ownership
 # ... 写代码 (cd day2/ownership && cargo run)、写 day2/NOTES.md ...
 
 # 2. 建博客草稿(写完删掉 draft: true 行)
-cd ~/blog && ./new_post.sh rust_learn day-2-ownership "Day 2 · 所有权"
+cd ~/blog && ./new_post.sh rust day-2-ownership "Day 2 · 所有权"
 
 # 3. 收工:两边各推一次
 cd ~/rust_learn && ./sync.sh "day 2: ownership"
@@ -35,6 +37,8 @@ cd ~/blog && ./sync.sh "post: day 2 ownership"
 
 ## 学习进度
 
-| Day | 日期 | 主题 | 博客 |
-|-----|------|------|------|
-| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [Day 1](https://roddyh17.github.io/posts/rust_learn/day-1-hello-rust/) |
+| Day | 日期 | 主题 | 笔记 | 博客 |
+|-----|------|------|------|------|
+| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [NOTES](day1/NOTES.md) | [Day 1](https://roddyh17.github.io/posts/rust/day-1-hello-rust/) |
+| 2 | 2026-08-03 | 变量 · 可变性 · 所有权 · 借用 | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-ownership/) |
+| 3 | 2026-08-03 | 结构体 · 方法 · impl | [NOTES](day3/NOTES.md) | [Day 3](https://roddyh17.github.io/posts/rust/day-3-structs/) |

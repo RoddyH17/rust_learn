@@ -1,11 +1,14 @@
-// Day 1 — 最原始的编译方式:直接用 rustc,不经过 cargo
-// 编译:rustc main.rs
+// Day 1 — 最简单的 Rust 程序
+//
+// 编译:rustc main.rs   (rustc 是 Rust 的编译器,把源代码变成可执行文件)
 // 运行:./main
 //
-// 对应 C++ 的:g++ main.cpp -o main && ./main
+// "编译"就是把人能读的代码翻译成电脑能直接执行的程序。
+// 之后我们会改用 cargo 来管理项目,rustc 裸编译只是为了理解底层发生了什么。
 
 fn main() {
-    // println! 是宏(macro),不是函数 —— 感叹号是标志
-    // C++ 里最接近的是 std::format / fmt::print,但那些是函数+模板,不是宏展开
+    // fn 定义一个函数;main 是程序的入口——运行程序时从这里开始执行
+    // println! 用来往屏幕上打印一行字
+    // 名字带 ! 说明它是"宏"(macro),暂时只需要记住:调用宏要写 !
     println!("Hello, world!");
 }
