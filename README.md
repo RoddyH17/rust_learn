@@ -37,4 +37,4 @@ cd ~/blog && ./sync.sh "post: day 2 ownership"
 
 | Day | 日期 | 主题 | 博客 |
 |-----|------|------|------|
-| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [Day 1](https://roddyh17.github.io/blog/rust_learn/day-1-hello-rust/) |
+| 1 | 2026-07-31 | 环境安装 · hello world · cargo | [Day 1](https://roddyh17.github.io/posts/rust_learn/day-1-hello-rust/) |
