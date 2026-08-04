@@ -2,8 +2,7 @@
 day: __N__
 date: __DATE__
 topic: __TOPIC__
-mood: # 1-5, how the day felt — fill in at wrap-up
-pace: # 1-5, how fast progress felt — fill in at wrap-up
+mood: # tags, e.g. [zen, frage] — zen = calm | sorge = frustrated | frage = unresolved question
 ---
 
 # Day __N__ — __TOPIC__ (__DATE__)

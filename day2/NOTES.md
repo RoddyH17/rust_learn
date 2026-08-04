@@ -2,8 +2,7 @@
 day: 2
 date: 2026-08-04
 topic: variables
-mood: 5 # 1-5, how the day felt
-pace: 5 # 1-5, how fast progress felt
+mood: [zen, frage] # zen = calm | sorge = frustrated | frage = unresolved question
 ---
 
 # Day 2 — Variables: const, static, Mutability, Shadowing, References (2026-08-04)

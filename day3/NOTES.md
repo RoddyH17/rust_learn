@@ -2,8 +2,7 @@
 day: 3
 date: 2026-08-03
 topic: structs
-mood: # 1-5, fill in when the day is done
-pace: # 1-5, fill in when the day is done
+mood: # tags, e.g. [zen] — zen = calm | sorge = frustrated | frage = unresolved question
 ---
 
 # Day 3 — Structs and Methods (2026-08-03)

@@ -2,8 +2,7 @@
 day: 1
 date: 2026-07-31
 topic: hello world & cargo
-mood: 3 # 1-5, how the day felt
-pace: 2 # 1-5, how fast progress felt
+mood: [sorge] # zen = calm | sorge = frustrated | frage = unresolved question
 ---
 
 # Day 1 — Setup + Hello World + Cargo (2026-07-31)
