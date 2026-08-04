@@ -1,0 +1,52 @@
+{
+    // Debug configs for the daily Rust projects.
+    // Press F5 (or the green ▶ in the Run and Debug panel) to build + debug.
+    // "cargo" tells CodeLLDB to run cargo build first and debug the result.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 2 · variables (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day2/variables/Cargo.toml"
+                ],
+                "filter": { "name": "variables", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day2/variables"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 2 · variables (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day2/variables/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day2/variables"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 3 · structs",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day3/structs/Cargo.toml"
+                ],
+                "filter": { "name": "structs", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day3/structs"
+        }
+    ]
+}

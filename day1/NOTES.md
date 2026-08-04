@@ -1,3 +1,11 @@
+---
+day: 1
+date: 2026-07-31
+topic: hello world & cargo
+mood: 3 # 1-5, how the day felt
+pace: 2 # 1-5, how fast progress felt
+---
+
 # Day 1 — Setup + Hello World + Cargo (2026-07-31)
 
 > ✍️ Blog post: [Day 1 · Hello Rust](https://roddyh17.github.io/posts/rust/day-1-hello-rust/) (the blog has the story; this file has the technical details)
@@ -36,5 +44,5 @@
 
 ## Plan for Day 2
 
-- Variables and mutability: `let` vs `let mut`, shadowing
-- Ownership, part 1: the core concept of Rust
+- Variables: `const`, `static`, `let` vs `let mut`, shadowing
+- References and borrowing

@@ -24,15 +24,15 @@ rust_learn/
 
 ```bash
 # 1. 开工:建 dayN 目录 + cargo 项目 + 笔记模板
-cd ~/rust_learn && ./new_day.sh 2 ownership
-# ... 写代码 (cd day2/ownership && cargo run)、写 day2/NOTES.md ...
+cd ~/rust_learn && ./new_day.sh 2 variables
+# ... 写代码 (cd day2/variables && cargo run)、写 day2/NOTES.md ...
 
 # 2. 建博客草稿(写完删掉 draft: true 行)
-cd ~/blog && ./new_post.sh rust day-2-ownership "Day 2 · 所有权"
+cd ~/blog && ./new_post.sh rust day-2-variables "Day 2 · Variables"
 
 # 3. 收工:两边各推一次
-cd ~/rust_learn && ./sync.sh "day 2: ownership"
-cd ~/blog && ./sync.sh "post: day 2 ownership"
+cd ~/rust_learn && ./sync.sh "day 2: variables"
+cd ~/blog && ./sync.sh "post: day 2 variables"
 ```
 
 ## 学习进度
@@ -40,5 +40,5 @@ cd ~/blog && ./sync.sh "post: day 2 ownership"
 | Day | 日期 | 主题 | 笔记 | 博客 |
 |-----|------|------|------|------|
 | 1 | 2026-07-31 | 环境安装 · hello world · cargo | [NOTES](day1/NOTES.md) | [Day 1](https://roddyh17.github.io/posts/rust/day-1-hello-rust/) |
-| 2 | 2026-08-03 | 变量 · 可变性 · 所有权 · 借用 | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-ownership/) |
+| 2 | 2026-08-04 | Variables · const/static · shadowing · references | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-variables/) |
 | 3 | 2026-08-03 | 结构体 · 方法 · impl | [NOTES](day3/NOTES.md) | [Day 3](https://roddyh17.github.io/posts/rust/day-3-structs/) |

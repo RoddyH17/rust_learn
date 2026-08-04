@@ -1,3 +1,11 @@
+---
+day: 3
+date: 2026-08-03
+topic: structs
+mood: # 1-5, fill in when the day is done
+pace: # 1-5, fill in when the day is done
+---
+
 # Day 3 — Structs and Methods (2026-08-03)
 
 > ✍️ Blog post: [Day 3 · Structs and Methods](https://roddyh17.github.io/posts/rust/day-3-structs/) (the blog has the story; this file has the technical details)
@@ -25,7 +33,7 @@
   ```
 - When creating an instance, every field needs a value. Access fields with `.`.
 - Mutability applies to the **whole instance**: `let mut user` makes all fields changeable. You cannot mark only one field as mutable.
-- **Struct update syntax** `..user2`: take the remaining fields from another instance. Note: String fields are moved — this is the Day 2 ownership rule. After the move, `user2.email` cannot be used.
+- **Struct update syntax** `..user2`: take the remaining fields from another instance. Note: String fields are **moved** — ownership of the data transfers to the new instance, so `user2.email` cannot be used afterwards.
 - **Tuple structs**: `struct Point(i32, i32);` — fields have no names. Access them by position with `.0`, `.1`. Useful when the meaning of each field is obvious.
 
 ### Methods and impl
