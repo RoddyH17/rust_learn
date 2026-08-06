@@ -6,6 +6,13 @@
 // fix it, or write a few lines yourself. After each change, run the file
 // again and check the output. Solutions are NOT given here on purpose —
 // check yourself against the rubric in day2/NOTES.md.
+//
+//   1–5   binding a value: mut, const/static, shadowing, references
+//   6–10  using a value:   expressions, if, tuples, arrays, loops
+//
+// Exercises 6–10 are adapted from Rust By Practice
+// (https://practice-rust-zh.beatai.org/), graded the same way that site does:
+//   🌟 warm-up   🌟🌟 the one that actually teaches something   🌟🌟🌟 challenge
 
 // Exercise 2 asks you to fill these in at module level:
 // TODO: define a `const` named MAX_SCORE with type u32 and value 100.
@@ -70,5 +77,160 @@ fn main() {
     //
     // Rule to check against: any number of `&T`, OR exactly one `&mut T`.
 
+    println!("--- Exercise 6: statements vs expressions (🌟🌟) ---");
+    // The whole rule, in one line:
+    //   NO semicolon = expression, it HAS a value.
+    //      semicolon = statement,  its value is `()`.
+    //
+    // (a) Uncomment `sum_of` at the bottom of this file. It does not compile.
+    //     Read the error, then fix it by deleting ONE character.
+    //     Then uncomment this:
+    // println!("sum_of(1, 2) = {}", sum_of(1, 2));   // expected: 3
+    //
+    // (b) Uncomment the block below and make `v` equal 3 in TWO ways:
+    //     first by removing a semicolon, then by putting `x` back explicitly
+    //     as a final line. Both should pass the assert.
+    //
+    // let v = {
+    //     let mut x = 1;
+    //     x += 2;
+    // };
+    // assert_eq!(v, 3);
+    // println!("v = {}", v);
+    //
+    // (c) Why does `let v = (let x = 3);` not compile in any language Rust
+    //     would accept? Say it out loud using the words above.
+
+    println!("--- Exercise 7: if is an expression (🌟🌟) ---");
+    // Uncomment the block below. It has TWO separate errors — one about
+    // types, one about semicolons. Predict both before you compile.
+    //
+    let n = 5;
+    // let big_n =
+    //     if n < 10 && n > -10 {
+    //         println!("数字太小，先增加 10 倍再说");
+    //         10 * n
+    //     } else {
+    //         println!("数字太大，我们得让它减半");
+    //         n / 2.0 ;
+    //     }
+    //
+    // println!("{} -> {}", n, big_n);
+    //
+    // Hint for error 1: what is the type of `10 * n`? And of `n / 2.0`?
+    //   Every arm of an `if` used as an expression must produce the SAME type.
+    // Hint for error 2: this is exercise 6 showing up again.
+    println!("n = {}", n);
+
+    println!("--- Exercise 8: tuples (🌟🌟) ---");
+    // (a) Destructure this tuple in ONE line so all three asserts pass.
+    //     Read the assert order carefully — it is not the obvious answer.
+    //
+    let tup = (1, 6.4, "hello");
+    // let __ = tup;
+    // assert_eq!(x, 1);
+    // assert_eq!(y, "hello");
+    // assert_eq!(z, 6.4);
+    println!("tup.0 = {}, tup.2 = {}", tup.0, tup.2);
+    //
+    // (b) A tuple is also how a function returns two values at once.
+    //     Uncomment `sum_multiply` at the bottom, then work out what to
+    //     pass in so that x == 5 and y == 6. (Pen and paper is fine.)
+    //
+    // let (x, y) = sum_multiply(__);
+    // assert_eq!(x, 5);
+    // assert_eq!(y, 6);
+
+    println!("--- Exercise 9: arrays (🌟🌟) ---");
+    // (a) An array's length is part of its TYPE: [T; N]. Predict the number
+    //     below before you uncomment it. A `char` in Rust is a Unicode
+    //     scalar value, not a byte.
+    //
+    let letters: [_; 3] = ['a', 'b', 'c'];
+    // assert!(std::mem::size_of_val(&letters) == __);
+    println!("letters = {:?}", letters);
+    //
+    // (b) Fill in a 100-element array where every element is 1,
+    //     without typing 100 ones.
+    //
+    // let list: [i32; 100] = __;
+    // assert!(list[0] == 1 && list.len() == 100);
+    //
+    // (c) Two ways to read an element — one is safe, one can panic.
+    //
+    let people = [String::from("Sunfei"), "Sunface".to_string()];
+    let first = people.get(0).unwrap();
+    println!("first = {}", first);
+    // let second = &people[2];   // uncomment: this compiles, then panics.
+    //
+    // Question to answer in NOTES: the index 2 is obviously out of range and
+    // the length is known at compile time — so why is this a runtime panic
+    // and not a compile error? What would you use instead?
+
+    println!("--- Exercise 10: loops and ownership (🌟🌟🌟) ---");
+    // This is the most important exercise of the day: it is the ownership
+    // rule from exercises 4–5 hiding underneath ordinary loop syntax.
+    //
+    // (a) One of these two loops destroys its array and one does not.
+    //     Uncomment BOTH println! lines. Only one will fail to compile.
+    //     Predict which, then fix it by adding ONE character.
+    //
+    let words = [String::from("liming"), String::from("hanmeimei")];
+    for word in words {
+        let _ = word;
+    }
+    // println!("{:?}", words);
+
+    let numbers = [1, 2, 3];
+    for number in numbers {
+        let _ = number;
+    }
+    // println!("{:?}", numbers);
+    //
+    // Then say why they differ, in terms of `Copy`. Write the three-row
+    // table (`for x in v` / `&v` / `&mut v`) from memory in NOTES.md.
+    //
+    // (b) `loop` is an expression too — `break` can carry a value out of it.
+    //     Fill in the blank so `result` is 20.
+    //
+    // let mut counter = 0;
+    // let result = loop {
+    //     counter += 1;
+    //     if counter == 10 {
+    //         __;
+    //     }
+    // };
+    // assert_eq!(result, 20);
+    //
+    // (c) 🌟🌟🌟 Labels. Trace this by hand FIRST — write the value of
+    //     `count` on paper at each step — then uncomment and check.
+    //
+    // let mut count = 0;
+    // 'outer: loop {
+    //     'inner1: loop {
+    //         if count >= 20 { break 'inner1; }
+    //         count += 2;
+    //     }
+    //     count += 5;
+    //     'inner2: loop {
+    //         if count >= 30 { break 'outer; }
+    //         continue 'outer;
+    //     }
+    // }
+    // assert!(count == __);
+
     println!("--- done ---");
 }
+
+// ---------- helpers for exercises 6 and 8 ----------
+
+// Exercise 6(a): uncomment. Delete one character to make it compile.
+// fn sum_of(x: i32, y: i32) -> i32 {
+//     x + y;
+// }
+
+// Exercise 8(b): uncomment. This one is already correct — the exercise is
+// working out what argument produces (5, 6).
+// fn sum_multiply(nums: (i32, i32)) -> (i32, i32) {
+//     (nums.0 + nums.1, nums.0 * nums.1)
+// }
