@@ -40,5 +40,5 @@ cd ~/blog && ./sync.sh "post: day 2 variables"
 | Day | 日期 | 主题 | 笔记 | 博客 |
 |-----|------|------|------|------|
 | 1 | 2026-07-31 | 环境安装 · hello world · cargo | [NOTES](day1/NOTES.md) | [Day 1](https://roddyh17.github.io/posts/rust/day-1-hello-rust/) |
-| 2 | 2026-08-04 | Variables · const/static · shadowing · references | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-variables/) |
-| 3 | 2026-08-03 | 结构体 · 方法 · impl | [NOTES](day3/NOTES.md) | [Day 3](https://roddyh17.github.io/posts/rust/day-3-structs/) |
+| 2 | 2026-08-04 | Variables · 类型 · 函数与表达式 · 流程控制 | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-variables/) |
+| 3 | 2026-08-06 | 所有权与内存 · move/clone/Copy · 借用 · NLL | [NOTES](day3/NOTES.md) | — |

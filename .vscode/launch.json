@@ -4,6 +4,7 @@
     // "cargo" tells CodeLLDB to run cargo build first and debug the result.
     "version": "0.2.0",
     "configurations": [
+        
         {
             "type": "lldb",
             "request": "launch",
@@ -37,16 +38,47 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Day 3 · structs",
+            "name": "Day 2 · ownership (main)",
             "cargo": {
                 "args": [
                     "build",
                     "--manifest-path",
-                    "${workspaceFolder}/day3/structs/Cargo.toml"
+                    "${workspaceFolder}/day2/ownership/Cargo.toml"
                 ],
-                "filter": { "name": "structs", "kind": "bin" }
+                "filter": { "name": "ownership", "kind": "bin" }
             },
-            "cwd": "${workspaceFolder}/day3/structs"
+            "cwd": "${workspaceFolder}/day2/ownership"
+        },
+
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 3 · ownership (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day3/ownership/Cargo.toml"
+                ],
+                "filter": { "name": "ownership", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day3/ownership"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 3 · ownership (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day3/ownership/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day3/ownership"
         }
     ]
 }

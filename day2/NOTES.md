@@ -157,5 +157,6 @@ All in `variables/examples/practice.rs`; run with `cargo run --example practice`
 
 ## Plan for Day 3
 
-- Structs: defining my own types
-- Methods and `impl` blocks
+- Notion 1.2 Ownership and Memory — stack vs heap, move, `clone`, the `Copy` trait
+- References and borrowing, the two rules, NLL
+- This is where today's `for` loop puzzle gets its real answer
