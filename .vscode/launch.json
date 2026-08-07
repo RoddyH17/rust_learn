@@ -69,32 +69,32 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Day 4 · slice_char_enum (main)",
+            "name": "Day 4 · arr_slice_enum (main)",
             "cargo": {
                 "args": [
                     "build",
                     "--manifest-path",
-                    "${workspaceFolder}/day4/slice_char_enum/Cargo.toml"
+                    "${workspaceFolder}/day4/arr_slice_enum/Cargo.toml"
                 ],
-                "filter": { "name": "slice_char_enum", "kind": "bin" }
+                "filter": { "name": "arr_slice_enum", "kind": "bin" }
             },
-            "cwd": "${workspaceFolder}/day4/slice_char_enum"
+            "cwd": "${workspaceFolder}/day4/arr_slice_enum"
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Day 4 · slice_char_enum (practice)",
+            "name": "Day 4 · arr_slice_enum (practice)",
             "cargo": {
                 "args": [
                     "build",
                     "--example",
                     "practice",
                     "--manifest-path",
-                    "${workspaceFolder}/day4/slice_char_enum/Cargo.toml"
+                    "${workspaceFolder}/day4/arr_slice_enum/Cargo.toml"
                 ],
                 "filter": { "name": "practice", "kind": "example" }
             },
-            "cwd": "${workspaceFolder}/day4/slice_char_enum"
+            "cwd": "${workspaceFolder}/day4/arr_slice_enum"
         }
     ]
 }

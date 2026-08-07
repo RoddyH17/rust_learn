@@ -1,13 +1,13 @@
 ---
 day: 4
 date: 2026-08-07
-topic: slice_char_enum
+topic: arr_slice_enum
 mood: # tags, e.g. [zen, frage] — zen = calm | sorge = frustrated | frage = unresolved question
 ---
 
-# Day 4 — slice_char_enum (2026-08-07)
+# Day 4 — arr_slice_enum (2026-08-07)
 
-> 📝 Live notes: [`slice_char_enum/src/main.rs`](slice_char_enum/src/main.rs) — written while watching, and the source everything else is generated from
+> 📝 Live notes: [`arr_slice_enum/src/main.rs`](arr_slice_enum/src/main.rs) — written while watching, and the source everything else is generated from
 >
 > ✍️ Blog post: [Day 4](https://roddyh17.github.io/posts/rust/day-4-slice-char-enum/) (the blog has the story; this file has the technical details)
 
@@ -27,7 +27,7 @@ mood: # tags, e.g. [zen, frage] — zen = calm | sorge = frustrated | frage = un
 ## Practice
 
 ```bash
-cd day4/slice_char_enum && cargo run --example practice
+cd day4/arr_slice_enum && cargo run --example practice
 ```
 
 <!-- One line per exercise: what it asks + expected output. Solutions live in my edits to practice.rs, not here. -->

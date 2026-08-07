@@ -2,8 +2,8 @@
 # 新建一天的学习目录:dayN/ + cargo 项目 + 现场记录骨架 + practice 骨架 + NOTES.md
 #
 # 用法: ./new_day.sh <N> [topic] [slug] [date]
-# 例:  ./new_day.sh 4 slice_char_enum
-#      ./new_day.sh 4 slice_char_enum day-4-slices 2026-08-07   # 补历史某天
+# 例:  ./new_day.sh 4 arr_slice_enum
+#      ./new_day.sh 4 arr_slice_enum day-4-slices 2026-08-07   # 补历史某天
 #
 #   topic  cargo 包名,也是目录名(下划线);默认 practice
 #   slug   博客文章的 slug,写进 NOTES.md 的链接;默认由 topic 推导(下划线→连字符)
