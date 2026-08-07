@@ -16,4 +16,4 @@ git push origin main
 
 echo ""
 echo "✅ 代码已推送: https://github.com/RoddyH17/rust_learn"
-echo "💡 别忘了写博客: ~/blog/content/ 新建 mdx 后跑 cd ~/blog && ./sync.sh"
+echo "💡 别忘了写博客: ~/blog/src/content/ 新建 mdx 后跑 cd ~/blog && ./sync.sh"

@@ -35,20 +35,6 @@
             },
             "cwd": "${workspaceFolder}/day2/variables"
         },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Day 2 · ownership (main)",
-            "cargo": {
-                "args": [
-                    "build",
-                    "--manifest-path",
-                    "${workspaceFolder}/day2/ownership/Cargo.toml"
-                ],
-                "filter": { "name": "ownership", "kind": "bin" }
-            },
-            "cwd": "${workspaceFolder}/day2/ownership"
-        },
 
         {
             "type": "lldb",
@@ -79,6 +65,36 @@
                 "filter": { "name": "practice", "kind": "example" }
             },
             "cwd": "${workspaceFolder}/day3/ownership"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 4 · slice_char_enum (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day4/slice_char_enum/Cargo.toml"
+                ],
+                "filter": { "name": "slice_char_enum", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day4/slice_char_enum"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 4 · slice_char_enum (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day4/slice_char_enum/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day4/slice_char_enum"
         }
     ]
 }
