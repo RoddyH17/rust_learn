@@ -95,6 +95,36 @@
                 "filter": { "name": "practice", "kind": "example" }
             },
             "cwd": "${workspaceFolder}/day4/arr_slice_enum"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 5 · enum_struct_match (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day5/enum_struct_match/Cargo.toml"
+                ],
+                "filter": { "name": "enum_struct_match", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day5/enum_struct_match"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 5 · enum_struct_match (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day5/enum_struct_match/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day5/enum_struct_match"
         }
     ]
 }
