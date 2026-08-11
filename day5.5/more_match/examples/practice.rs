@@ -8,20 +8,25 @@
 //   Day 5    enum 的三种变体形态、Option/Result 的思路
 //   Day 5.5  match:结构体解构、守卫 guard、`@` 绑定、ref mut、if let / while let
 //   Day 6    struct、impl(方法 vs 关联函数)、trait、静态分发 vs 动态分发
+//   JSON     serde derive + json! 宏 + serde_json 解析(Stage 9-11)
+//
+// JSON 的规矩:**数据进出一律走 serde,不手写字符串解析器。**
+//   - 依赖:serde(derive 特性)+ serde_json,已经在 Cargo.toml 里了
+//   - 造测试数据用 `json!` 宏,不用手拼字符串
+//   - 类型用 `#[derive(Serialize, Deserialize)]`,不手写 impl
+//   - 解析失败走 `Result`,不 unwrap 到 panic
 //
 // 规则和以前一样:**这个文件必须始终能编译**。你要写的代码写在下面标好的位置,
 // 每写完一个 Stage,就把 main 里对应那一段验收断言取消注释,`cargo run --example practice`
 // 跑一遍。全部取消注释且断言全过 = 项目完成。
 //
 // 评级:🌟 照着提示就能写   🌟🌟 需要想一下   🌟🌟🌟 卡住了回去翻笔记
-//
 // 参考(卡住时再看,别提前翻):
 //   https://practice-rust-zh.beatai.org/pattern-match/patterns.html
 //   https://practice-rust-zh.beatai.org/pattern-match/match-iflet.html
 //   https://practice-rust-zh.beatai.org/compound-types/struct.html
 //   https://practice-rust-zh.beatai.org/compound-types/enum.html
 //   https://practice-rust-zh.beatai.org/generics-traits/traits.html
-
 // ============================================================================
 // 需求:一个订单在生命周期里只可能处于三种状态之一 —— 挂着、成交了、被撤了。
 //       成交要记下成交价和成交量;撤单要记下原因。引擎要能分类、能结算、能打印。
@@ -172,6 +177,72 @@
 
 // 在这里写 Stage 8:
 
+// ---------------------------------------------------------------------------
+// Stage 9 · serde 派生:让类型自己会读写 JSON (🌟🌟)
+// ---------------------------------------------------------------------------
+// 规矩:**数据进出一律走 serde,不手写字符串解析器。**
+// 依赖已经写进 Cargo.toml 了(serde + serde_json),你只需要在文件顶部加:
+//
+//   use serde::{Deserialize, Serialize};
+//   use serde_json::json;
+//
+// 然后给 `Side`、`OrderStatus`、`Order` 三个类型都加上
+// `Serialize, Deserialize` 两个 derive。
+//
+//   提示:和 Day 6 的 `#[derive(Debug)]` 是同一个机制 —— 过程宏,编译期生成代码,
+//         零运行时开销。区别只是这两个 trait 来自 serde 而不是 std。
+//   提示:derive 可以并排写:`#[derive(Debug, Clone, Serialize, Deserialize)]`。
+//   提示:`Side` 已经是 Copy 了,加这两个不影响。
+//
+// 先自己猜一下:一个带载荷的 enum 变体,serde 默认会序列化成什么形状?
+// 是 `"Filled"` 这样的裸字符串,还是套一层?写完之后用下面这行验:
+//   println!("{}", serde_json::to_string(&some_order).unwrap());
+
+// 在这里写 Stage 9(在上面各个类型的 derive 里补,不用新增代码块):
+
+// ---------------------------------------------------------------------------
+// Stage 10 · json! 宏:造数据,然后解析回来 (🌟🌟)
+// ---------------------------------------------------------------------------
+// 这一步不用写新函数,直接看 main 里 Stage 9-10 那段断言 —— 你要让它跑通。
+// 需要知道的是 **serde 默认的枚举表示法(externally tagged)**:
+//
+//   OrderStatus::Pending                      → "Pending"                  裸字符串
+//   OrderStatus::Filled { .. }                → { "Filled": { .. } }       套一层
+//   OrderStatus::Canceled { reason }          → { "Canceled": { "reason": .. } }
+//   Side::Buy                                 → "Buy"
+//
+//   提示:单元变体没有载荷,所以只需要一个名字;带载荷的变体要用「变体名 → 载荷」
+//         这一层来告诉解析器该按哪个变体读。这正是 Day 5 说的 tag —— 只不过
+//         内存里那个 tag 是一个字节,JSON 里它是一个 key。
+//   提示:`json!({ .. })` 里写的是 JSON 字面量,不是 Rust 结构体,所以 key 要加引号。
+//   提示:`serde_json::from_value::<Order>(v)` 从 `Value` 转;
+//         `serde_json::from_str::<Order>(s)` 从字符串转。Stage 10 用前者。
+
+// 在这里写 Stage 10(如果 Stage 9 做对了,这一步可能一行都不用写):
+
+// ---------------------------------------------------------------------------
+// Stage 11 · load_feed:解析一整段订单流,并处理失败 (🌟🌟🌟)
+// ---------------------------------------------------------------------------
+// 写一个自由函数:
+//   `load_feed(raw: &str) -> Result<Vec<Order>, serde_json::Error>`
+// 把一段 JSON 数组解析成 `Vec<Order>`。解析失败要**返回 Err,不能 panic**。
+//
+//   提示:函数体可以只有一行。`serde_json::from_str` 本身就返回 `Result`,
+//         而且它对 `Vec<T>` 是现成支持的 —— 你不需要自己遍历数组。
+//   提示:返回类型已经和它对上了,所以直接 return 它的结果即可。想练 `?` 的话
+//         写成 `Ok(serde_json::from_str(raw)?)` 也对,想想这两种写法差在哪。
+//   提示:这就是 Day 5 说的 Result 的用处 —— 失败要带原因。对比一下:
+//         如果这里返回 `Option<Vec<Order>>`,你会丢掉什么信息?
+//
+// 验收里有两条坏数据,报错分别长这样(自己跑一遍核对):
+//   {"id":"不是数字"}   → invalid type: string "...", expected u32 at line .. column ..
+//   "side":"Hold"       → unknown variant `Hold`, expected `Buy` or `Sell`
+//
+//   ⚠️ 注意第二条:**枚举的穷尽性一路延伸到了数据边界。** Rust 里 match 不许你漏掉
+//      变体,serde 则不许外部数据编造一个不存在的变体。这是同一个想法的两端。
+
+// 在这里写 Stage 11:
+
 // ============================================================================
 // 验收:每写完一个 Stage,取消注释对应的一段。全部放开且跑通 = 完成。
 // ============================================================================
@@ -232,6 +303,38 @@ fn main() {
     // println!("结算总额 = {}", total);
     // println!("✅ Stage 8:while let + if let");
 
+    // ---- Stage 9 + 10 ----
+    // let raw = json!({
+    //     "id": 7, "side": "Sell", "price": 20.0, "quantity": 3.0,
+    //     "status": { "Filled": { "execution_price": 19.5, "quantity": 3.0 } }
+    // });
+    // let parsed: Order = serde_json::from_value(raw).expect("这条应该能解析");
+    // assert_eq!(parsed.id, 7);
+    // assert_eq!(parsed.side, Side::Sell);
+    // assert_eq!(classify(&parsed), "成交 @ 19.5");
+    // // 再转回去,确认往返一致
+    // let back = serde_json::to_string(&parsed).unwrap();
+    // assert!(back.contains("\"Filled\""), "结构体变体应该是 {{\"Filled\": {{..}}}}");
+    // println!("✅ Stage 9-10:derive + json! + 往返");
+
+    // ---- Stage 11 ----
+    // let feed = r#"[
+    //     {"id":1,"side":"Buy","price":100.0,"quantity":5.0,"status":"Pending"},
+    //     {"id":2,"side":"Sell","price":50.0,"quantity":200.0,
+    //      "status":{"Filled":{"execution_price":49.5,"quantity":200.0}}}
+    // ]"#;
+    // let mut orders = load_feed(feed).expect("这段 feed 是合法的");
+    // assert_eq!(orders.len(), 2);
+    // assert_eq!(classify(&orders[0]), "等待成交");
+    // assert_eq!(classify(&orders[1]), "大额成交 @ 49.5");
+    // assert_eq!(settle(&mut orders), 49.5 * 200.0);   // 只有第二单成交了
+    //
+    // // 失败路径:两种坏数据,都要走 Err 而不是 panic
+    // assert!(load_feed(r#"[{"id":"不是数字"}]"#).is_err());
+    // assert!(load_feed(r#"[{"id":1,"side":"Hold","price":1.0,"quantity":1.0,"status":"Pending"}]"#).is_err());
+    // println!("坏数据的报错:{}", load_feed(r#"[{"id":"x"}]"#).unwrap_err());
+    // println!("✅ Stage 11:解析 feed 与失败路径");
+
     // ---- 全部完成 ----
     // println!("\n🎉 项目跑通了。");
 }
@@ -250,4 +353,13 @@ fn main() {
 //
 // 4. Stage 7 里如果把 `&[&dyn Describe]` 改成 `&[&impl Describe]`,
 //    编译器说什么?用这条报错解释一遍静态分发和动态分发的取舍。
+//
+// 5. Stage 9 里 `OrderStatus::Pending` 序列化成裸字符串 `"Pending"`,而
+//    `Filled { .. }` 序列化成 `{"Filled": {..}}`。为什么两者形状不一样?
+//    这和 Day 5 内存布局那节「单元变体只要一个 tag,带载荷的要 tag + 载荷」
+//    是不是同一件事?
+//
+// 6. Stage 11 喂进一个 `"side":"Hold"`,serde 报 `unknown variant`。
+//    把它和 Day 5 的「match 必须穷尽」放在一起想:
+//    编译期的穷尽性检查和运行期的反序列化校验,守的是不是同一条边界?
 // ============================================================================

@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# Stage 9-11 用:serde 负责派生序列化/反序列化,serde_json 提供 json! 宏和解析器。
+# 规矩是不手写字符串解析器 —— 数据进出一律走 serde。
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

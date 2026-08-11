@@ -196,8 +196,37 @@ cd day5.5/more_match && cargo run --example practice
 | 6 | `size_bucket` —— `@` 绑定 + 范围模式 | 🌟🌟 |
 | 7 | `trait Describe` + `&[&dyn Describe]` 异质切片 | 🌟🌟🌟 |
 | 8 | `settle` —— `while let` + `if let` | 🌟🌟 |
+| 9 | serde 派生 `Serialize` / `Deserialize` | 🌟🌟 |
+| 10 | `json!` 宏造数据 + `from_value` 解析 + 往返 | 🌟🌟 |
+| 11 | `load_feed` 解析订单流,失败走 `Result` | 🌟🌟🌟 |
 
 main 里是逐段取消注释的验收断言,写完一个 Stage 放开一段。
+
+**JSON 的规矩:数据进出一律走 serde,不手写字符串解析器。**
+依赖是 `serde`(derive 特性)+ `serde_json`;造测试数据用 `json!` 宏而不是手拼字符串;
+类型用 `#[derive(Serialize, Deserialize)]` 而不是手写 impl;解析失败走 `Result` 不 unwrap。
+
+### serde 默认的枚举表示法(externally tagged)
+
+| Rust | JSON |
+|---|---|
+| `OrderStatus::Pending` | `"Pending"` |
+| `OrderStatus::Filled { .. }` | `{"Filled": {"execution_price": .., "quantity": ..}}` |
+| `OrderStatus::Canceled { reason }` | `{"Canceled": {"reason": ..}}` |
+| `Side::Buy` | `"Buy"` |
+
+单元变体只要一个名字,带载荷的要「变体名 → 载荷」套一层来告诉解析器按哪个变体读 ——
+这正是 Day 5 内存布局里的 tag,只不过在内存里它是一个字节,在 JSON 里它是一个 key。
+
+两条实测的报错:
+
+```text
+{"id":"x"}      → invalid type: string "x", expected u32 at line 1 column 10
+"side":"Hold"   → unknown variant `Hold`, expected `Buy` or `Sell`
+```
+
+第二条值得记:**枚举的穷尽性一路延伸到了数据边界。** `match` 不许漏掉变体,
+serde 不许外部数据编造一个不存在的变体 —— 编译期和运行期守的是同一条边界。
 
 ## Questions I asked
 
