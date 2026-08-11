@@ -134,11 +134,11 @@
                 "args": [
                     "build",
                     "--manifest-path",
-                    "${workspaceFolder}/day6/oop/Cargo.toml"
+                    "${workspaceFolder}/day6/oop_basic/Cargo.toml"
                 ],
                 "filter": { "name": "oop", "kind": "bin" }
             },
-            "cwd": "${workspaceFolder}/day6/oop"
+            "cwd": "${workspaceFolder}/day6/oop_basic"
         },
         {
             "type": "lldb",
@@ -150,11 +150,11 @@
                     "--example",
                     "practice",
                     "--manifest-path",
-                    "${workspaceFolder}/day6/oop/Cargo.toml"
+                    "${workspaceFolder}/day6/oop_basic/Cargo.toml"
                 ],
                 "filter": { "name": "practice", "kind": "example" }
             },
-            "cwd": "${workspaceFolder}/day6/oop"
+            "cwd": "${workspaceFolder}/day6/oop_basic"
         },
         {
             "type": "lldb",
