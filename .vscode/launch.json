@@ -125,6 +125,66 @@
                 "filter": { "name": "practice", "kind": "example" }
             },
             "cwd": "${workspaceFolder}/day5/enum_struct_match"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 6 · oop (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day6/oop/Cargo.toml"
+                ],
+                "filter": { "name": "oop", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day6/oop"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 6 · oop (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day6/oop/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day6/oop"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 5.5 · more_match (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day5.5/more_match/Cargo.toml"
+                ],
+                "filter": { "name": "more_match", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day5.5/more_match"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 5.5 · more_match (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day5.5/more_match/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day5.5/more_match"
         }
     ]
 }

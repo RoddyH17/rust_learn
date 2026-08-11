@@ -192,5 +192,5 @@ cd day5/enum_struct_match && cargo run --example practice
 
 ## Plan for Day 6
 
-- struct(字段、`impl`、关联函数与方法)
+- OOP 入门:struct(字段、`impl`、关联函数与方法)与 trait
 - 补上 enum + struct 合并的 `examples/practice.rs`
