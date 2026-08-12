@@ -176,15 +176,30 @@ where Self: Sized, U: IntoIterator
 i. 处理错误 ii. 解析命令行参数 iii. 解析配置文件与数据包 —— 共同点都是
 **拿到一坨结构未知的数据,按结构分支**。
 
-## Practice
+## Practice vs Project —— 这一天开始分家
 
-这一天配的是一个 **mini project**,不是零散小题 —— 也是之前欠着的 struct + enum 合并练习:
+这一天之后,学习方式正式分成两条:
+
+| | Practice(练习) | Project(项目式学习) |
+|---|---|---|
+| 位置 | `dayN/<crate>/examples/practice.rs` | `projects/<name>/` 独立 crate |
+| 形态 | 十道互不相干的小题 | 一个能跑的系统,前一步的输出是后一步的输入 |
+| 提示 | 语法级 | 架构级:管道图 → 思考阶梯 → 候选方案 → reflection |
+| 归属 | 属于某一天 | 跨多天,自己的进度 |
+
+原本学习只有一种方式(看视频),现在是两种:**视频式学习**和**项目式学习**。
+day5.5 的迷你订单引擎是第一次项目式学习 —— 它仍处于学习阶段,不是纯练习:
+里面很多批注是我边做边问 AI 得到的,有些地方还要回头复习,不算完全独立写出来。
+这是项目式学习起步时的正常形态,记下来是为了以后回看时知道当时的真实水平。
+
+## Practice(已完成 ✅)
 
 ```bash
 cd day5.5/more_match && cargo run --example practice
 ```
 
-**迷你订单引擎**,8 个 Stage,约 100 行自己写的代码,跨 Day 5 / 5.5 / 6:
+**迷你订单引擎**,11 个 Stage,约 400 行自己写的代码,跨 Day 5 / 5.5 / 6 + JSON。
+全部 Stage 的验收断言跑通。
 
 | Stage | 内容 | 级别 |
 |---|---|---|
@@ -228,6 +243,61 @@ main 里是逐段取消注释的验收断言,写完一个 Stage 放开一段。
 第二条值得记:**枚举的穷尽性一路延伸到了数据边界。** `match` 不许漏掉变体,
 serde 不许外部数据编造一个不存在的变体 —— 编译期和运行期守的是同一条边界。
 
+### 练习结尾的六道回答题(⏳ 还没写)
+
+写在 `practice.rs` 末尾,答案要落到下面的「Questions I asked」里:
+
+1. `Side` 能 derive `Copy` 而 `OrderStatus` 不能,是哪个字段决定的?
+   和 Day 4「数组是不是 Copy 由元素类型决定」是同一条规则吗?
+2. Stage 4 不用 `ref` / `&mut` 时编译器报哪个错?和 Day 6 `..user1` 的部分移动是同一个吗?
+3. Stage 5 把守卫挪到普通 `Filled` 后面会怎样 —— 编译错误、警告,还是静默跑错?
+4. `&[&dyn Describe]` 改成 `&[&impl Describe]` 报什么?用它解释静态 vs 动态分发。
+5. `Pending` 序列化成裸字符串而 `Filled` 套一层,为什么形状不同?
+   和 Day 5 内存布局的 tag 是同一件事吗?
+6. serde 的 `unknown variant` 和 `match` 的穷尽性,守的是不是同一条边界?
+
+## Project —— 下一步:限价订单簿
+
+第一个正式的项目式学习,方向转向**交易 / 策略 / 高频数据**。
+
+```bash
+cd projects/orderbook && cargo run
+```
+
+订单簿是交易所最核心的数据结构:未成交的挂单按价格排队,新单进来看能不能撮合上。
+「最优买价 / 最优卖价 / 价差」这些行情数字都是从它读出来的。
+
+| 阶段 | 内容 | 新知识 | 重点练 | 预计 |
+|---|---|---|---|---|
+| 0 | 读架构简报,自己重画管道图 | —— | 建模 | 15 min |
+| 1 | newtype `Price(i64)` / `Qty(u64)` + `impl` | newtype;钱为什么不用 f64 | impl / OOP | 40 min |
+| 2 | 档位容器选型 | `BTreeMap` + `VecDeque`;`Ord` vs `PartialOrd` | 数据结构 | 40 min |
+| 3 | `BookSide<K: Ord>` 一份代码服务买卖两边 | 泛型、trait bound、`Reverse` | 泛型 | 45 min |
+| 4 | `insert` / `cancel` | 所有权:簿子持有订单,撤单还给谁 | match | 35 min |
+| 5 | 撮合:限价单穿越价差 | 初步算法;复用本日的 `OrderStatus` | match + trait | 45 min |
+
+合计约 3.5 小时。**不做**:队列位置建模、多线程、快照增量、性能测试。
+
+### 这个项目的提示词是新格式
+
+因为旧提示词停在语法层(「用 `n @ 1..=10`」),而我在 Stage 8 的批注里
+其实已经在更高一层思考了 ——「由大到小: 先想架构上的思维」。新格式每阶段五段:
+
+① 管道位置 ② 要解决什么 + **不负责什么** ③ **思考阶梯**(每问标注要用到哪天的笔记)
+④ 候选方案与代价(**不给答案**)⑤ **✍️ reflection 空白**(自己填,共 35 处)
+
+语法提示全部下沉到文件末尾。两处「先痛,再给药」的设计:
+阶段 3 先写两份重复代码再引出泛型;阶段 1 选 `i64` 的理由只讲精度,
+到阶段 2 撞上 `the trait bound f64: Ord is not satisfied` 才回头发现它救了自己。
+
+### 做完之后对照
+
+[OrderBook-rs](https://github.com/joaquinbejar/OrderBook-rs) —— 线程安全 + 无锁的
+工程级实现。**做完再看**,逐段对照自己的选择和人家差在哪。
+更远的目标:[hftbacktest](https://lib.rs/crates/hftbacktest)(高频回测,建模队列位置与延迟)、
+[barter-rs](https://github.com/barter-rs/barter-rs)(事件驱动)、
+[nautilus_trader](https://github.com/nautechsystems/nautilus_trader)(生产级引擎)。
+
 ## Questions I asked
 
 - **Q:** `match x { var @ string => .. }` 为什么不对?
@@ -255,5 +325,7 @@ serde 不许外部数据编造一个不存在的变体 —— 编译期和运行
 
 ## Plan for Day 7
 
-- 做完 `examples/practice.rs` 的迷你订单引擎
-- 泛型 generics
+- ✅ 迷你订单引擎已做完(11 个 Stage 全绿)
+- ⏳ 补上练习结尾的六道回答题
+- ⏳ 开始 `projects/orderbook/` 的阶段 0-2
+- 泛型 generics(项目阶段 3 会正面撞上,可以先做项目再回来补理论)
