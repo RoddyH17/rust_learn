@@ -41,4 +41,30 @@ cd ~/blog && ./sync.sh "post: day 2 variables"
 |-----|------|------|------|------|
 | 1 | 2026-07-31 | 环境安装 · hello world · cargo | [NOTES](day1/NOTES.md) | [Day 1](https://roddyh17.github.io/posts/rust/day-1-hello-rust/) |
 | 2 | 2026-08-04 | Variables · 类型 · 函数与表达式 · 流程控制 | [NOTES](day2/NOTES.md) | [Day 2](https://roddyh17.github.io/posts/rust/day-2-variables/) |
-| 3 | 2026-08-06 | 所有权与内存 · move/clone/Copy · 借用 · NLL | [NOTES](day3/NOTES.md) | — |
+| 3 | 2026-08-06 | 所有权与内存 · move/clone/Copy · 借用 · NLL | [NOTES](day3/NOTES.md) | [Day 3](https://roddyh17.github.io/posts/rust/day-3-ownership/) |
+| 4 | 2026-08-08 | 数组 · 切片 · 胖指针 · enum 初识 | [NOTES](day4/NOTES.md) | [Day 4](https://roddyh17.github.io/posts/rust/day-4-arrays-and-slices/) |
+| 5 | 2026-08-09 | enum · struct · match | [NOTES](day5/NOTES.md) | [Day 5](https://roddyh17.github.io/posts/rust/day-5-enums-and-match/) |
+| 5.5 | 2026-08-11 | 模式全谱 · 守卫 · trait 对象 · **迷你订单引擎** | [NOTES](day5.5/NOTES.md) | [Day 5.5](https://roddyh17.github.io/posts/rust/day-5-5-pattern-matching/) |
+| 6 | 2026-08-10 | struct 三形态 · impl · trait · Display | [NOTES](day6/NOTES.md) | [Day 6](https://roddyh17.github.io/posts/rust/day-6-structs-and-traits/) |
+| 7 | 2026-08-11 | Vec · HashMap · entry API · capacity | [NOTES](day7/NOTES.md) | [Day 7](https://roddyh17.github.io/posts/rust/day-7-data-structure-cookbook/) |
+| 7.5 | 2026-08-12 | Option 的引入/消去规则 · Result · 自定义错误 enum · `?` | [NOTES](day7.5/NOTES.md) | — |
+| 8 | 2026-08-13 | 模块系统 · 可见性 · 路径 · use/as · workspace | [NOTES](day8/NOTES.md) | — |
+
+**基础教学到 Day 8 结束。** 接下来进入阶段实战项目。
+
+## 阶段实战项目 · Rung
+
+> 📐 设计报告:[`projects/rung/DESIGN.md`](projects/rung/DESIGN.md)
+
+**Rung**(梯级)—— 一个用 Rust 从零构建的交易系统内核:限价订单簿与撮合引擎 → 实时行情
+管道与 L2 重建 → 微结构特征与在线推理。
+
+它的设计受两组约束支配:它必须是一个真实可用的系统,**并且**它的每个阶段必须恰好逼出一项
+当前尚未掌握的 Rust 能力(泛型、生命周期、智能指针、闭包、测试、workspace、async、基准)。
+详细的基线审计、选型评分、架构推导与实施路径见设计报告。
+
+```
+projects/
+├── rung/           # 阶段实战项目(设计报告已完成,S1 待开工)
+└── orderbook/      # 前身:五段式教学格式的原型,其阶段 0-5 已并入 Rung S1
+```
