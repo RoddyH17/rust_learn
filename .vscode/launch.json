@@ -185,6 +185,96 @@
                 "filter": { "name": "practice", "kind": "example" }
             },
             "cwd": "${workspaceFolder}/day5.5/more_match"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 7 · data-structure-cookbook (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day7/data-structure-cookbook/Cargo.toml"
+                ],
+                "filter": { "name": "data-structure-cookbook", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day7/data-structure-cookbook"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 7 · data-structure-cookbook (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day7/data-structure-cookbook/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day7/data-structure-cookbook"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 8 · module (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day8/module/Cargo.toml"
+                ],
+                "filter": { "name": "module", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day8/module"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 8 · module (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day8/module/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day8/module"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 7.5 · option (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day7.5/option/Cargo.toml"
+                ],
+                "filter": { "name": "option", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day7.5/option"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 7.5 · option (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day7.5/option/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day7.5/option"
         }
     ]
 }
