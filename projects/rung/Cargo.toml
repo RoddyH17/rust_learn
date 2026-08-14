@@ -1,0 +1,22 @@
+# Rung workspace 根。
+#
+# 注意这是一个 **virtual manifest** —— 它没有 [package] 段,自己不是一个 crate,
+# 只负责把 crates/ 下面的成员组织在一起。
+#
+# 为什么要显式写 resolver:普通 package 的 resolver 由 edition 推导,
+# 但 virtual manifest 没有 edition 可推,不写就会退回老版本并给你一个警告。
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+# 成员 crate 用 `version.workspace = true` 继承这里,改版本只改一处。
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Roddy Huang <zh89@cornell.edu>"]
+license = "MIT"
+repository = "https://github.com/RoddyH17/rust_learn"
+
+# 第三方依赖统一在这里定版本,成员 crate 写 `foo.workspace = true`。
+# 现在是空的 —— rung-core 的架构断言就是「零依赖」。
+[workspace.dependencies]

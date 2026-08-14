@@ -1,0 +1,21 @@
+[package]
+name = "rung-core"
+description = "Rung 的类型与容器层:限价订单簿的核心数据结构。零依赖、零 I/O。"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# ⚠️ 架构断言:这一段必须永远是空的。
+#
+# rung-core 是「纯核心」—— 不碰网络、不碰文件、不碰时钟、不碰随机数。
+# 一旦这里出现了依赖,就意味着有人把副作用带进了内核,
+# 而内核的确定性(阶段 9 的重放要靠它)就没了。
+#
+# 需要 serde?那说明序列化应该发生在 rung-replay,不是这里。
+# 需要日志?那说明你在调试,用 `cargo test -- --nocapture` 和 dbg!(),别加依赖。
+[dependencies]
+
+[dev-dependencies]
+# 阶段 7 会在这里加 proptest。测试用的依赖不进下游用户的构建,所以这里是允许的。

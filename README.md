@@ -54,9 +54,11 @@ cd ~/blog && ./sync.sh "post: day 2 variables"
 
 ## 阶段实战项目 · Rung
 
-> 📐 设计报告(做什么 / 为什么):[`projects/rung/DESIGN.md`](projects/rung/DESIGN.md)
-> 🗺 实施路线(怎么做):[`projects/rung/ROADMAP.md`](projects/rung/ROADMAP.md)
-> 📋 当前阶段:[`projects/rung/stages/stage-00.md`](projects/rung/stages/stage-00.md) —— 纸上作业
+> 📖 领域科普:[`PRIMER.md`](projects/rung/PRIMER.md) —— 交易所、流动性、CEX vs 链上 DEX(零基础)
+> 🧭 架构方法:[`METHOD.md`](projects/rung/METHOD.md) —— 系统设计怎么想,七条方法
+> 📐 设计报告:[`DESIGN.md`](projects/rung/DESIGN.md) —— 做什么 / 为什么
+> 🗺 实施路线:[`ROADMAP.md`](projects/rung/ROADMAP.md) —— 怎么做,阶段 0–10 全部任务
+> 📋 当前阶段:[`stage-00`](projects/rung/stages/stage-00.md) 纸上作业 → [`stage-01`](projects/rung/stages/stage-01.md) 类型基座(骨架就绪,24 红)
 
 **Rung**(梯级)—— 一个用 Rust 从零构建的交易系统内核:限价订单簿与撮合引擎 → 实时行情
 管道与 L2 重建 → 微结构特征与在线推理。
