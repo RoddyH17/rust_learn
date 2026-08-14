@@ -22,8 +22,9 @@
 > 它抓不出「成交价算错了 1 个 tick」「同价档位里排队顺序错了一位」——
 > 而那才是撮合引擎真正会出的 bug。参考模型能。
 
-你要写的是 **18 个 `todo!()`**。接口、行为规格、测试全部给你了 ——
-**这个阶段没有任何需要你猜的东西**,需要你做的是实现对。
+你要写的是 **36 个 `todo!()`**(types 12 · order 9 · trade 2 · naive 13)。
+接口、行为规格、测试全部给你了 —— **这个阶段没有任何需要你猜的东西**,
+需要你做的是实现对。
 
 ### 现在的状态
 
@@ -70,17 +71,17 @@ doc   :  0 passed;  6 failed
 
 **这个顺序是硬规定。每个子步跑绿了才进下一步。**
 
-> 如果你把 18 个函数全实现完再开始测试,你会同时面对十几个失败,
+> 如果你把 36 个函数全实现完再开始测试,你会同时面对几十个失败,
 > 而且分不清是哪个函数的问题。**实现一个,测一个。**
 
-| 子步 | 内容 | 闸门 |
-|---|---|---|
-| **1a** | `Price` / `Qty` / `Side` 的全部方法 | `./scripts/test.sh types` |
-| **1b** | `Order` 的构造、访问器、`assign_seq`、`fill` | `./scripts/test.sh order` |
-| **1c** | `Trade` 与 `BookError` 的 `Display` | `./scripts/test.sh trade` |
-| **1d** | `NaiveBook` 的挂单、撤单、查询 | `./scripts/test.sh tests_1d` |
-| **1e** | `NaiveBook` 的 `depth` 与 `submit` | `./scripts/test.sh tests_1e` |
-| **1f** | 全部跑绿 + 清警告 + 测基线 | `./scripts/test.sh` 然后 `./scripts/eval.sh` |
+| 子步 | 内容 | `todo!()` | 闸门 | 该绿几条 |
+|---|---|---|---|---|
+| **1a** | `Price` / `Qty` / `Side` 的全部方法 | 12 | `./scripts/test.sh types` | 16 |
+| **1b** | `Order` 的构造、访问器、`assign_seq`、`fill` | 9 | `./scripts/test.sh order` | 7 |
+| **1c** | `Trade` 与 `BookError` 的 `Display` | 2 | `./scripts/test.sh trade` | 2 |
+| **1d** | `NaiveBook` 的挂单、撤单、查询 | ~7 | `./scripts/test.sh tests_1d` | 14 |
+| **1e** | `NaiveBook` 的 `depth` 与 `submit` | ~6 | `./scripts/test.sh tests_1e` | 20 |
+| **1f** | 全部跑绿 + 清警告 + 测基线 | — | `./scripts/test.sh` 然后 `./scripts/eval.sh` | 131 |
 
 ### 放大调试
 
