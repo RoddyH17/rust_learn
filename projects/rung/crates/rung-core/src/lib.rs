@@ -65,6 +65,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+mod level;
 mod naive;
 mod order;
 mod trade;
@@ -80,6 +81,7 @@ mod types;
 // 上面四个 `mod` 都没有 `pub` —— 模块本身私有,外面只看得到下面重导出的名字。
 // 好处:以后把 types.rs 拆成三个文件、或者改名,对使用者完全无感。
 
+pub use level::{ArenaLevel, BoxListLevel, DequeLevel, LevelQueue, NodeRef};
 pub use naive::NaiveBook;
 pub use order::Order;
 pub use trade::{BookError, Trade};

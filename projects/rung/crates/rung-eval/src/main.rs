@@ -35,7 +35,9 @@
 use std::process::ExitCode;
 use std::time::Instant;
 
-use rung_core::{NaiveBook, Order, OrderId, Price, Qty, Side};
+use rung_core::{
+    ArenaLevel, BoxListLevel, DequeLevel, LevelQueue, NaiveBook, Order, OrderId, Price, Qty, Side,
+};
 
 // ---------------------------------------------------------------------------
 // 确定性随机数
@@ -233,13 +235,92 @@ fn eval_pattern(pattern: Pattern, sizes: &[u64]) {
     }
 }
 
+// ---------------------------------------------------------------------------
+// 阶段 2 · 档位队列基准
+// ---------------------------------------------------------------------------
+
+/// 一个档位内的混合负载:挂 n 笔 → 随机摘掉一半 → 剩下的全部出队。
+///
+/// 负载形状照真实档位设计:
+/// - `push_back` 每笔订单都做
+/// - `remove` 是撤单(做市商改价),占比很高
+/// - `pop_front` 是成交
+///
+/// 三份实现跑**完全相同**的操作序列(同一个种子),所以数字可以直接比。
+/// 打乱顺序在计时之外完成 —— 生成负载的成本不属于被测系统。
+fn bench_level<L: LevelQueue>(n: u64) -> (f64, f64) {
+    // 确定性地生成「摘除顺序」。三份实现拿到的是同一份。
+    let mut rng = Rng::new(0xBEEF_0000 ^ n);
+    let mut remove_order: Vec<usize> = (0..n as usize).collect();
+    for i in (1..remove_order.len()).rev() {
+        let j = rng.below((i + 1) as u64) as usize;
+        remove_order.swap(i, j);
+    }
+    let half = remove_order.len() / 2;
+
+    let mut level = L::new();
+    let mut handles: Vec<L::Handle> = Vec::with_capacity(n as usize);
+
+    let t0 = Instant::now();
+
+    for i in 0..n {
+        handles.push(level.push_back(i, Qty::new(1)));
+    }
+    for &k in &remove_order[..half] {
+        let _ = level.remove(handles[k]);
+    }
+    while level.pop_front().is_some() {}
+
+    let elapsed = t0.elapsed();
+    let ops = n as usize + half + (n as usize - half);
+    (
+        elapsed.as_secs_f64(),
+        elapsed.as_nanos() as f64 / ops as f64,
+    )
+}
+
+fn eval_level(sizes: &[u64]) {
+    println!();
+    println!("═══ 档位队列:三份实现对比(阶段 2) ═══");
+    println!("    负载:挂 n 笔 → 随机摘掉一半 → 剩下的全部出队");
+    println!();
+    println!(
+        "  {:>7}  {:>12}  {:>12}  {:>12}  {:>10}  {:>10}",
+        "n", "Deque ns/op", "BoxList ns/op", "Arena ns/op", "Box 加速", "Arena 加速"
+    );
+    println!("  {}", "─".repeat(76));
+
+    for &n in sizes {
+        let (_, d) = bench_level::<DequeLevel>(n);
+        let (_, b) = bench_level::<BoxListLevel>(n);
+        let (_, a) = bench_level::<ArenaLevel>(n);
+        println!(
+            "  {:>7}  {:>12.1}  {:>12.1}  {:>12.1}  {:>9.2}×  {:>9.2}×",
+            n,
+            d,
+            b,
+            a,
+            d / b,
+            d / a
+        );
+    }
+
+    println!();
+    println!("  「加速」列以 DequeLevel 为基准。小于 1 表示更慢。");
+    println!("  预期:BoxList 在每一项上都更慢(push_back 是 O(n));");
+    println!("        Arena 的优势随 n 增大而扩大(remove 是 O(1) 而非 O(n))。");
+    println!("  如果实测和预期不符,那正是报告里最值得写的一段。");
+}
+
 fn usage() {
-    eprintln!("rung-eval —— 按订单流模式 × 规模测量订单簿性能");
+    eprintln!("rung-eval —— 测量订单簿与档位队列的性能");
     eprintln!();
     eprintln!("用法:");
-    eprintln!("  rung-eval                      全部模式 × 全部规模");
+    eprintln!("  rung-eval                      全部模式 × 全部规模(NaiveBook)");
     eprintln!("  rung-eval <pattern>            指定模式");
     eprintln!("  rung-eval <pattern> <n>        指定模式与规模");
+    eprintln!("  rung-eval level                档位队列三份实现对比(阶段 2)");
+    eprintln!("  rung-eval level <n>            指定规模");
     eprintln!();
     eprintln!("模式:");
     for p in [
@@ -274,6 +355,7 @@ fn main() -> ExitCode {
                 eval_pattern(p, &default_sizes);
             }
         }
+        1 if args[0] == "level" => eval_level(&default_sizes),
         1 => match Pattern::parse(&args[0]) {
             Some(p) => eval_pattern(p, &default_sizes),
             None => {
@@ -282,6 +364,14 @@ fn main() -> ExitCode {
                 return ExitCode::FAILURE;
             }
         },
+        2 if args[0] == "level" => {
+            let Ok(n) = args[1].parse::<u64>() else {
+                eprintln!("❌ 规模必须是正整数: {}\n", args[1]);
+                usage();
+                return ExitCode::FAILURE;
+            };
+            eval_level(&[n]);
+        }
         2 => {
             let Some(p) = Pattern::parse(&args[0]) else {
                 eprintln!("❌ 未知模式: {}\n", args[0]);
