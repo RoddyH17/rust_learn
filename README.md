@@ -54,7 +54,9 @@ cd ~/blog && ./sync.sh "post: day 2 variables"
 
 ## 阶段实战项目 · Rung
 
-> 📐 设计报告:[`projects/rung/DESIGN.md`](projects/rung/DESIGN.md)
+> 📐 设计报告(做什么 / 为什么):[`projects/rung/DESIGN.md`](projects/rung/DESIGN.md)
+> 🗺 实施路线(怎么做):[`projects/rung/ROADMAP.md`](projects/rung/ROADMAP.md)
+> 📋 当前阶段:[`projects/rung/stages/stage-00.md`](projects/rung/stages/stage-00.md) —— 纸上作业
 
 **Rung**(梯级)—— 一个用 Rust 从零构建的交易系统内核:限价订单簿与撮合引擎 → 实时行情
 管道与 L2 重建 → 微结构特征与在线推理。
