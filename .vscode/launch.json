@@ -275,6 +275,36 @@
                 "filter": { "name": "practice", "kind": "example" }
             },
             "cwd": "${workspaceFolder}/day7.5/option"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 9 · smart_pointer (main)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--manifest-path",
+                    "${workspaceFolder}/day9/smart_pointer/Cargo.toml"
+                ],
+                "filter": { "name": "smart_pointer", "kind": "bin" }
+            },
+            "cwd": "${workspaceFolder}/day9/smart_pointer"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 9 · smart_pointer (practice)",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example",
+                    "practice",
+                    "--manifest-path",
+                    "${workspaceFolder}/day9/smart_pointer/Cargo.toml"
+                ],
+                "filter": { "name": "practice", "kind": "example" }
+            },
+            "cwd": "${workspaceFolder}/day9/smart_pointer"
         }
     ]
 }

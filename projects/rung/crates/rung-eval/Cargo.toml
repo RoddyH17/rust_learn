@@ -1,0 +1,15 @@
+[package]
+name = "rung-eval"
+description = "Rung 的性能评测程序。按订单流模式 × 规模计时。"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "rung-eval"
+path = "src/main.rs"
+
+[dependencies]
+rung-core = { path = "../rung-core" }

@@ -3,12 +3,5 @@
 version = 4
 
 [[package]]
-name = "rung-core"
+name = "smart_pointer"
 version = "0.1.0"
-
-[[package]]
-name = "rung-eval"
-version = "0.1.0"
-dependencies = [
- "rung-core",
-]
